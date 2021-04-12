@@ -1,0 +1,83 @@
+﻿  Source.cpp
+c:\users\мсай\source\repos\graphs\graphs\form.h(32): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(36): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\form.h(37): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(66): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(72): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\form.h(73): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(127): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(129): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\form.h(130): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(191): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\form.h(192): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(19): warning C4244: аргумент: преобразование "_Ty2" в "T", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+          and
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(19): warning C4244: аргумент: преобразование "_Ty1" в "T", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+          and
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(21): warning C4244: аргумент: преобразование "_Ty2" в "T", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+          and
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(21): warning C4244: аргумент: преобразование "_Ty1" в "T", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+          and
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(30): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(30): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(45): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(45): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(16): warning C4244: аргумент: преобразование "const double" в "unsigned int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(90): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+  graphs.vcxproj -> C:\Users\МСАЙ\source\repos\graphs\Debug\graphs.exe
