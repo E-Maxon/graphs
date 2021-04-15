@@ -1,9 +1,8 @@
-#include <cmath>
+п»ї#include <cmath>
 #include <unordered_map>
 #include <string>
 #include "condense.h"
 #include "topsort.h"
-#include "arrows.h"
 
 using namespace std;
 using namespace sf;
@@ -14,7 +13,7 @@ const double size_of_arrows = 50;
 const double angle_of_rot_arrow = 10;
 
 pair<double, double> rotate(pair<double, double> v, double alpha) {
-    alpha = alpha * PI / 180.0; //переводим в радианы
+    alpha = alpha * PI / 180.0; //РїРµСЂРµРІРѕРґРёРј РІ СЂР°РґРёР°РЅС‹
     double x = v.first * cos(alpha) - v.second * sin(alpha);
     double y = v.first * sin(alpha) + v.second * cos(alpha);
     return { x, y };
@@ -40,9 +39,17 @@ pair<double, double> norm_for_arrow(pair<double, double> v) {
     return { x, y };
 }
 
+void draw_line(pair<double, double> v1, pair<double, double> v2, Color clr, RenderWindow& window) {
+    VertexArray line(Lines, 2);
+    line[0].position = Vector2f(v1.first, v1.second);
+    line[0].color = clr;
+    line[1].position = Vector2f(v2.first, v2.second);
+    line[1].color = clr;
+    window.draw(line);
+}
 
 void draw_edge(pair<double, double> v1, pair<double, double> v2, RenderWindow& window) {
-    draw_arrow(v1, v2, Color::Black, window);
+    draw_line(v1, v2, Color::Black, window);
     pair<double, double> d = minus_pair(v1, v2);
     pair<double, double> arrow1 = plus_pair(norm_for_arrow(rotate(d, angle_of_rot_arrow)), v2);
     pair<double, double> arrow2 = plus_pair(norm_for_arrow(rotate(d, -angle_of_rot_arrow)), v2);
@@ -50,8 +57,8 @@ void draw_edge(pair<double, double> v1, pair<double, double> v2, RenderWindow& w
     k = radius / k;
     d.first *= k;
     d.second *= k;
-    draw_arrow(plus_pair(v2, d), arrow1, Color::Black, window);
-    draw_arrow(plus_pair(v2, d), arrow2, Color::Black, window);
+    draw_line(plus_pair(v2, d), arrow1, Color::Black, window);
+    draw_line(plus_pair(v2, d), arrow2, Color::Black, window);
     return;
 }
 
