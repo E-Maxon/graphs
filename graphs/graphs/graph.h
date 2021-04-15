@@ -9,6 +9,9 @@ using namespace std;
 using namespace sf;
 
 const double PI = 3.14159265;
+const double radius = 30;
+const double size_of_arrows = 50;
+const double angle_of_rot_arrow = 10;
 
 pair<double, double> rotate(pair<double, double> v, double alpha) {
     alpha = alpha * PI / 180.0; //переводим в радианы
@@ -17,13 +20,42 @@ pair<double, double> rotate(pair<double, double> v, double alpha) {
     return { x, y };
 }
 
+pair<double, double> plus_pair(pair<double, double> v1, pair<double, double> v2) {
+    double x = v1.first + v2.first;
+    double y = v1.second + v2.second;
+    return { x, y };
+}
+
+pair<double, double> minus_pair(pair<double, double> v1, pair<double, double> v2) {
+    double x = v1.first - v2.first;
+    double y = v1.second - v2.second;
+    return { x, y };
+}
+
+pair<double, double> norm_for_arrow(pair<double, double> v) {
+    double k = sqrt(v.first * v.first + v.second * v.second);
+    k = size_of_arrows / k;
+    double x = v.first*k;
+    double y = v.second*k;
+    return { x, y };
+}
+
+
 void draw_edge(pair<double, double> v1, pair<double, double> v2, RenderWindow& window) {
     draw_arrow(v1, v2, Color::Black, window);
+    pair<double, double> d = minus_pair(v1, v2);
+    pair<double, double> arrow1 = plus_pair(norm_for_arrow(rotate(d, angle_of_rot_arrow)), v2);
+    pair<double, double> arrow2 = plus_pair(norm_for_arrow(rotate(d, -angle_of_rot_arrow)), v2);
+    double k = sqrt(d.first * d.first + d.second * d.second);
+    k = radius / k;
+    d.first *= k;
+    d.second *= k;
+    draw_arrow(plus_pair(v2, d), arrow1, Color::Black, window);
+    draw_arrow(plus_pair(v2, d), arrow2, Color::Black, window);
     return;
 }
 
 void draw_vertex(pair<double, double> v, int num, RenderWindow& window) {
-    const double radius = 30;
     CircleShape circle(radius);
     circle.setPosition(v.first - radius, v.second - radius);
     circle.setFillColor(Color::White);
