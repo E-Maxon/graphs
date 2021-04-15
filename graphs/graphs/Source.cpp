@@ -35,13 +35,16 @@ int main() {
         int a, b;
         cin >> a >> b;
         graph[--a].push_back(--b);
-        graph[b].push_back(a);
     }
     for (int i = 0; i < n; ++i) {
         vertex.push_back(i);
     }
 
     int cnt = 0;
+
+    vector<pair<double, double> > poly(n);
+    build_graph(graph_space.getPosition().x, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
+
     while (window.isOpen()) {
         if (cnt == 0) {
             start.update();
@@ -87,7 +90,7 @@ int main() {
         start.displayText(window);
         window.draw(graph_space);
 
-        build_component(graph_space.getPosition().x, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, window, vertex, graph);
+        draw_graph(poly, graph, window);
         window.display();
 
         sleep(milliseconds(1000 / 60));

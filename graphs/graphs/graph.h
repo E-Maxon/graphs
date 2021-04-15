@@ -1,6 +1,9 @@
 #include <cmath>
 #include <unordered_map>
 #include <string>
+#include "condense.h"
+#include "topsort.h"
+#include "arrows.h"
 
 using namespace std;
 using namespace sf;
@@ -15,12 +18,7 @@ pair<double, double> rotate(pair<double, double> v, double alpha) {
 }
 
 void draw_edge(pair<double, double> v1, pair<double, double> v2, RenderWindow& window) {
-    VertexArray line(Lines, 2);
-    line[0].position = Vector2f(v1.first, v1.second);
-    line[0].color = Color::Black;
-    line[1].position = Vector2f(v2.first, v2.second);
-    line[1].color = Color::Black;
-    window.draw(line);
+    draw_arrow(v1, v2, Color::Black, window);
     return;
 }
 
@@ -48,7 +46,7 @@ void draw_vertex(pair<double, double> v, int num, RenderWindow& window) {
     return;
 }
 
-void build_component(int x, int y, int width, int height, RenderWindow& window, vector<int>& vertex, vector<vector<int> >& graph) {
+void build_component(int x, int y, int width, int height, vector<int>& vertex, vector<pair<double, double> >& poly) {
     x = (x + width / 2 / 3);
     y = (y + height / 2 / 3);
     width = width * 4 / 6;
@@ -59,33 +57,58 @@ void build_component(int x, int y, int width, int height, RenderWindow& window, 
     for (int i = 0; i < k; ++i) {
         num[vertex[i]] = i;
     }
-    
-    vector<pair<double, double> > poly;
+
     double x0 = (double)x + (double)width / 2.0;
     double y0 = (double)y + (double)height / 2.0;
 
     double alpha = 360.0 / (double)k;
     double x1 = x0;
     double y1 = y0 - (double)height / 2.0;
-    poly.push_back({ x1, y1 });
+    poly[vertex[0]] = { x1, y1 };
     pair<double, double> v = { x1 - x0, y1 - y0 };
 
     for (int i = 1; i < k; ++i) {
         v = rotate(v, alpha);
-        poly.push_back({ x0 + v.first, y0 + v.second });
-    }
-
-    for (int i = 0; i < k; ++i) {
-        for (auto v : graph[vertex[i]]) {
-            if (num.find(v) != num.end()) {
-                draw_edge(poly[i], poly[num[v]], window);
-            }
-        }
-    }
-
-    for (int i = 0; i < k; ++i) {
-        draw_vertex(poly[i], vertex[i], window);
+        poly[vertex[i]] = { x0 + v.first, y0 + v.second };
     }
 
     return;
+}
+
+void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph, RenderWindow& window) {
+    for (int i = 0; i < graph.size(); ++i) {
+        for (auto v : graph[i]) {
+            draw_edge(poly[i], poly[v], window);
+        }
+    }
+
+    for (int i = 0; i < graph.size(); ++i) {
+        draw_vertex(poly[i], i, window);
+    }
+}
+
+void build_graph(int x, int y, int width, int height, vector<vector<int> >& graph, vector<pair<double, double> >& poly) {
+    vector<vector<int> > comp = condense(graph);
+
+    for (auto i : comp) {
+        for (auto j : i) {
+            cout << j + 1 << " ";
+        }
+        cout << '\n';
+    }
+
+    vector<int> num = comps;
+    vector<vector<int> > levels = topsort(comp, graph, num);
+
+    int w = width / maxcnt;
+    int h = height / (int)levels.size();
+
+    for (int i = 0; i < levels.size(); ++i) {
+        int x0 = x + w * (maxcnt - levels[i].size()) / 2;
+        for (auto j : levels[i]) {
+            build_component(x0, y, w, h, comp[j], poly);
+            x0 += w;
+        }
+        y += h;
+    }
 }
