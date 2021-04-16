@@ -85,6 +85,11 @@ void draw_vertex(pair<double, double> v, int num, RenderWindow& window) {
     return;
 }
 
+bool intersect(pair<double, double> p, double x, double y) {
+    double sqdist = (x - p.first) * (x - p.first) + (y - p.second) * (y - p.second);
+    return sqdist <= radius * radius;
+}
+
 void build_component(int x, int y, int width, int height, vector<int>& vertex, vector<pair<double, double> >& poly) {
     x = (x + width / 2 / 3);
     y = (y + height / 2 / 3);

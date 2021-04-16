@@ -45,6 +45,8 @@ int main() {
     vector<pair<double, double> > poly(n);
     build_graph(graph_space.getPosition().x, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
 
+    int vertex_focus = -1;
+    Vector2i pos0;
     while (window.isOpen()) {
         if (cnt == 0) {
             start.update();
@@ -62,6 +64,16 @@ int main() {
                 if (start.select(mouse)) {
                     start.press();
                 }
+                for (int i = 0; i < poly.size(); ++i) {
+                    if (intersect(poly[i], mouse.x, mouse.y)) {
+                        vertex_focus = i;
+                        pos0 = mouse;
+                        break;
+                    }
+                }
+            }
+            if (event.type == sf::Event::MouseButtonReleased) {
+                vertex_focus = -1;
             }
             if (event.type == sf::Event::TextEntered) {
                 if (input.select()) {
@@ -81,6 +93,12 @@ int main() {
             }
         }
 
+        if (vertex_focus != -1) {
+            Vector2i mouse = Mouse::getPosition(window);
+            poly[vertex_focus].first += mouse.x - pos0.x;
+            poly[vertex_focus].second += mouse.y - pos0.y;
+            pos0 = mouse;
+        }
 
         window.clear();
         window.draw(background);
