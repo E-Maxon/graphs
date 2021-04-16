@@ -64,7 +64,7 @@ int main() {
                 if (start.select(mouse)) {
                     start.press();
                 }
-                for (int i = 0; i < poly.size(); ++i) {
+                for (int i = (int)poly.size() - 1; i >= 0; --i) {
                     if (intersect(poly[i], mouse.x, mouse.y)) {
                         vertex_focus = i;
                         pos0 = mouse;
