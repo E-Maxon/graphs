@@ -43,7 +43,7 @@ int main() {
     int cnt = 0;
 
     vector<pair<double, double> > poly(n);
-    build_graph(graph_space.getPosition().x, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
+    build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
 
     int vertex_focus = -1;
     Vector2i pos0;
