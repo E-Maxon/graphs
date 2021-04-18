@@ -105,6 +105,11 @@ void build_component(int x, int y, int width, int height, vector<int>& vertex, v
     double x0 = (double)x + (double)width / 2.0;
     double y0 = (double)y + (double)height / 2.0;
 
+    if (k == 1) {
+        poly[vertex[0]] = { x0, y0 };
+        return;
+    }
+
     double alpha = 360.0 / (double)k;
     double x1 = x0;
     double y1 = y0 - (double)height / 2.0;

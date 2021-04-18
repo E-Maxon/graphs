@@ -37,6 +37,7 @@ vector<vector<int> > topsort(vector<vector<int> >& comp, vector<vector<int> >& g
         for (auto u : graph[i]) {
             if (num[i] != num[u]) {
                 tree[num[i]].push_back(num[u]);
+                tree[num[u]].push_back(num[i]);
             }
         }
     }
@@ -51,15 +52,7 @@ vector<vector<int> > topsort(vector<vector<int> >& comp, vector<vector<int> >& g
         }
     }
 
-    int root = 0;
-    for (int i = 0; i < comp.size(); ++i) {
-        if (order[i] == 0) {
-            root = i;
-            break;
-        }
-    }
-
-    dfs4(root, 0, tree, levels, used);
+    dfs4(0, 0, tree, levels, used);
 
     for (int i = 0; i < levels.size(); ++i) {
         if (levels[i].size() > maxcnt) {
