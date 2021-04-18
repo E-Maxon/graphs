@@ -95,6 +95,12 @@ int main() {
 
         if (vertex_focus != -1) {
             Vector2i mouse = Mouse::getPosition(window);
+            if (mouse.x < graph_space.getPosition().x + radius ||
+                mouse.x > graph_space.getPosition().x + graph_space.getSize().x - radius ||
+                mouse.y < graph_space.getPosition().y + radius ||
+                mouse.y > graph_space.getPosition().y + graph_space.getSize().y - radius) {
+                continue;
+            }
             poly[vertex_focus].first += mouse.x - pos0.x;
             poly[vertex_focus].second += mouse.y - pos0.y;
             pos0 = mouse;
@@ -111,7 +117,7 @@ int main() {
         draw_graph(poly, graph, window);
         window.display();
 
-        sleep(milliseconds(1000 / 60));
-        cnt = (cnt + 1) % 10;
+        //sleep(milliseconds(1000 / 60));
+        cnt = (cnt + 1) % 50;
     }
 }
