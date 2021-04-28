@@ -12,6 +12,13 @@ const double radius = 30;
 const double size_of_arrows = 50;
 const double angle_of_rot_arrow = 10;
 
+struct Edge {
+    int v, u;
+    int w;
+    Edge() {}
+    Edge(int v, int u, int w) : v(v), u(u), w(w) {}
+};
+
 pair<double, double> rotate(pair<double, double> v, double alpha) {
     alpha = alpha * PI / 180.0; //переводим в радианы
     double x = v.first * cos(alpha) - v.second * sin(alpha);
@@ -48,7 +55,21 @@ void draw_line(pair<double, double> v1, pair<double, double> v2, Color clr, Rend
     window.draw(line);
 }
 
-void draw_edge(pair<double, double> v1, pair<double, double> v2, RenderWindow& window) {
+template<typename T>
+void draw_text(pair<double, double> v, T w, RenderWindow& window) {
+    Font font;
+    font.loadFromFile("Times-New-Roman.ttf");
+    Text TXT;
+    TXT.setFont(font);
+    TXT.setCharacterSize(20);
+    TXT.setFillColor(Color::Black);
+    TXT.setPosition(v.first, v.second);
+    wstring str = L"√" + to_wstring(w);
+    TXT.setString(str);
+    window.draw(TXT);
+}
+
+void draw_edge(pair<double, double> v1, pair<double, double> v2, int w, RenderWindow& window) {
     draw_line(v1, v2, Color::Black, window);
     pair<double, double> d = minus_pair(v1, v2);
     pair<double, double> arrow1 = plus_pair(norm_for_arrow(rotate(d, angle_of_rot_arrow)), v2);
@@ -59,6 +80,20 @@ void draw_edge(pair<double, double> v1, pair<double, double> v2, RenderWindow& w
     d.second *= k;
     draw_line(plus_pair(v2, d), arrow1, Color::Black, window);
     draw_line(plus_pair(v2, d), arrow2, Color::Black, window);
+
+    pair<double, double> v = { v2.first - v1.first, v2.second - v1.second };
+    auto norm = rotate(v, 90);
+    norm = norm_for_arrow(norm);
+    norm.first /= 2.0;
+    norm.second /= 2.0;
+    v.first /= 2.0;
+    v.second /= 2.0;
+    norm.first += v.first;
+    norm.second += v.second;
+    norm.first += v1.first;
+    norm.second += v1.second;
+    draw_text(norm, w, window);
+
     return;
 }
 
@@ -124,13 +159,11 @@ void build_component(int x, int y, int width, int height, vector<int>& vertex, v
     return;
 }
 
-void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph, RenderWindow& window) {
-    for (int i = 0; i < graph.size(); ++i) {
-        for (auto v : graph[i]) {
-            draw_edge(poly[i], poly[v], window);
-        }
+void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph, vector<Edge>& edges, RenderWindow& window) {
+    for (auto e : edges) {
+        draw_edge(poly[e.v], poly[e.u], e.w, window);
     }
-
+    
     for (int i = 0; i < graph.size(); ++i) {
         draw_vertex(poly[i], i, window);
     }

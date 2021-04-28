@@ -12,7 +12,7 @@ const double outline = 30;
 
 int main() {
     sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
+    settings.antialiasingLevel = 10;
     sf::RenderWindow window(sf::VideoMode(width, height), "graph editor", sf::Style::Default, settings);
     RectangleShape background;
     background.setSize(Vector2f(width, height));
@@ -31,10 +31,13 @@ int main() {
     cin >> n >> m;
 
     graph.resize(n);
+    vector<Edge> edges;
     for (int i = 0; i < m; ++i) {
-        int a, b;
-        cin >> a >> b;
+        int a, b, c;
+        cin >> a >> b >> c;
+        //c = 1;
         graph[--a].push_back(--b);
+        edges.push_back({ a, b, c });
     }
     for (int i = 0; i < n; ++i) {
         vertex.push_back(i);
@@ -114,7 +117,7 @@ int main() {
         start.displayText(window);
         window.draw(graph_space);
 
-        draw_graph(poly, graph, window);
+        draw_graph(poly, graph, edges, window);
         window.display();
 
         //sleep(milliseconds(1000 / 60));
