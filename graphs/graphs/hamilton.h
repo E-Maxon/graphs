@@ -14,9 +14,7 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
     vector<vector<int> > dp((1 << n), vector<int>(n));
     vector<vector<int> > prev((1 << n), vector<int>(n, -1));
 
-    for (int i = 0; i < n; ++i) {
-        dp[1 << i][i] = 1;
-    }
+    dp[1 << 0][0] = 1;
 
     for (int mask = 0; mask < (1 << n); ++mask) {
         for (int v = 0; v < n; ++v) {
@@ -35,6 +33,16 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
     int mask = (1 << n) - 1;
     for (int i = 0; i < n; ++i) {
         if (dp[mask][i]) {
+            bool f = false;
+            for (auto u : graph[i]) {
+                if (u == 0) {
+                    f = true;
+                    break;
+                }
+            }
+
+            if (!f) continue;
+
             v = i;
             break;
         }
