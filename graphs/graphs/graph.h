@@ -3,6 +3,7 @@
 #include <string>
 #include "condense.h"
 #include "topsort.h"
+#include "hamilton.h"
 
 using namespace std;
 using namespace sf;
@@ -171,6 +172,7 @@ void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph
 
 void build_graph(int x, int y, int width, int height, vector<vector<int> >& graph, vector<pair<double, double> >& poly) {
     vector<vector<int> > comp = condense(graph);
+    sort_by_hamilthonian_path(comp, graph);
 
     for (auto i : comp) {
         for (auto j : i) {
