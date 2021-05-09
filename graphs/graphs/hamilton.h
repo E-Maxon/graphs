@@ -21,9 +21,9 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
             if (!dp[mask][v]) continue;
             for (auto u : graph[comp[v]]) {
                 if (num.find(u) != num.end() && 
-                    (mask | (1 << num[u])) != u) {
-                    dp[mask | (1 << num[u])][u] = 1;
-                    prev[mask | (1 << num[u])][u] = v;
+                    (mask | (1 << num[u])) != mask) {
+                    dp[mask | (1 << num[u])][num[u]] = 1;
+                    prev[mask | (1 << num[u])][num[u]] = v;
                 }
             }
         }
@@ -34,8 +34,8 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
     for (int i = 0; i < n; ++i) {
         if (dp[mask][i]) {
             bool f = false;
-            for (auto u : graph[i]) {
-                if (u == 0) {
+            for (auto u : graph[comp[i]]) {
+                if (u == comp[0]) {
                     f = true;
                     break;
                 }
@@ -54,12 +54,13 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
 
     vector<int> tmp;
     while (prev[mask][v] != -1) {
-        tmp.push_back(v);
+        tmp.push_back(comp[v]);
+        cout << comp[v] + 1 << " ";
         auto tmp2 = mask ^ (1 << v);
         v = prev[mask][v];
         mask = tmp2;
     }
-    tmp.push_back(v);
+    tmp.push_back(comp[v]);
     comp = tmp;
 }
 
