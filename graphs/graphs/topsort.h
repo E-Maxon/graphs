@@ -3,28 +3,33 @@
 using namespace std;
 
 int maxcnt;
-vector<int> order;
-int cnt_c;
 
-void dfs3(int v, vector<vector<int> >& graph, vector<int>& used) {
+void dfs3(int v, int d, vector<vector<int> >& graph, vector<int>& used, vector<int>& depth, vector<int>& add) {
     used[v] = 1;
+    depth[v] = d;
     for (auto u : graph[v]) {
         if (!used[u]) {
-            dfs3(u, graph, used);
+            dfs3(u, d + 1, graph, used, depth, add);
+        }
+        else {
+            add[u] = max(add[u], depth[v] + 1 - depth[u]);
         }
     }
-    order[v] = cnt_c--;
 }
 
-void dfs4(int v, int depth, vector<vector<int> >& graph, vector<vector<int> >& levels, vector<int>& used) {
+void dfs4(int v, int delta, vector<vector<int> >& graph, vector<vector<int> >& levels, vector<int>& used, vector<int>& depth, vector<int>& add) {
     used[v] = 2;
-    if (levels.size() <= depth) {
-        levels.resize(levels.size() + 1);
+    delta = max(delta, add[v]);
+    depth[v] += delta;
+
+    if (levels.size() <= depth[v]) {
+        levels.resize(depth[v] + 1);
     }
-    levels[depth].push_back(v);
+
+    levels[depth[v]].push_back(v);
     for (auto u : graph[v]) {
         if (used[u] != 2) {
-            dfs4(u, depth + 1, graph, levels, used);
+            dfs4(u, delta, graph, levels, used, depth, add);
         }
     }
 }
@@ -32,27 +37,30 @@ void dfs4(int v, int depth, vector<vector<int> >& graph, vector<vector<int> >& l
 vector<vector<int> > topsort(vector<vector<int> >& comp, vector<vector<int> >& graph, vector<int>& num) {
     vector<int> used;
 
-    vector<vector<int> > tree(comp.size());
+    int n = comp.size();
+    vector<vector<int> > tree(n);
     for (int i = 0; i < graph.size(); ++i) {
         for (auto u : graph[i]) {
             if (num[i] != num[u]) {
                 tree[num[i]].push_back(num[u]);
-                tree[num[u]].push_back(num[i]);
             }
         }
     }
 
+    vector<int> depth(n), add(n);
     vector<vector<int> > levels;
-    used.resize(comp.size());
-    cnt_c = comp.size() - 1;
-    order.resize(comp.size());
-    for (int i = 0; i < comp.size(); ++i) {
+    used.resize(n);
+    for (int i = 0; i < n; ++i) {
         if (!used[i]) {
-            dfs3(i, tree, used);
+            dfs3(i, 0, tree, used, depth, add);
         }
     }
 
-    dfs4(0, 0, tree, levels, used);
+    for (int i = 0; i < n; ++i) {
+        if (used[i] != 2) {
+            dfs4(i, 0, tree, levels, used, depth, add);
+        }
+    }
 
     for (int i = 0; i < levels.size(); ++i) {
         if (levels[i].size() > maxcnt) {
