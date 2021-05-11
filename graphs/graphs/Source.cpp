@@ -10,6 +10,43 @@ const double height = 900;
 const double width = 1800;
 const double outline = 30;
 
+void update_graph(int& n, vector<Edge>& edges, vector<vector<int> >& graph) {
+    graph.clear();
+
+    n = 0;
+
+    for (auto p : edges) {
+        n = max(n, max(p.v, p.u));
+    }
+
+    graph.resize(n + 1);
+    
+    for (auto edge : edges) {
+        graph[edge.v].push_back(edge.u);
+    }
+}
+
+void update_edges(vector<Edge>& edges, vector<string> text) {
+    edges.clear();
+    for (auto s : text) {
+        if (s == "|") continue;
+        vector<int> data(3);
+        int mode = 0;
+        char prev = '-';
+        for (auto c : s) {
+            if (isdigit(c)) {
+                data[mode] = data[mode] * 10 + (c - '0');
+            }
+            else if (isspace(c) && !isspace(prev)) {
+                if (mode == 2) break;
+                ++mode;
+            }
+            prev = c;
+        }
+        edges.push_back({ data[0] - 1, data[1] - 1, data[2] });
+    }
+}
+
 int main() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 10;
@@ -25,28 +62,14 @@ int main() {
     graph_space.setFillColor(Color(204, 204, 204));
 
     vector<vector<int> > graph;
-    vector<int> vertex;
-
-    int n, m;
-    cin >> n >> m;
-
-    graph.resize(n);
     vector<Edge> edges;
-    for (int i = 0; i < m; ++i) {
-        int a, b, c;
-        cin >> a >> b >> c;
-        //c = 1;
-        graph[--a].push_back(--b);
-        edges.push_back({ a, b, c });
-    }
-    for (int i = 0; i < n; ++i) {
-        vertex.push_back(i);
-    }
+
+    int n;
 
     int cnt = 0;
 
-    vector<pair<double, double> > poly(n);
-    build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
+    vector<pair<double, double> > poly;
+    //build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
 
     int vertex_focus = -1;
     Vector2i pos0;
@@ -80,7 +103,13 @@ int main() {
             }
             if (event.type == sf::Event::TextEntered) {
                 if (input.select()) {
+                    int sz = input.text.size();
                     input.reText(event.text.unicode);
+                    if (input.text.size() != sz) {
+                        update_edges(edges, input.text);
+                        update_graph(n, edges, graph);
+                        build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
+                    }
                 }
 
             }
@@ -91,7 +120,9 @@ int main() {
                 if (event.key.code == sf::Keyboard::Enter && input.select()) {
                     input.text[input.text.size() - 1].pop_back();
                     input.text.push_back("|");
-                    cout << "hello\n";
+                    update_edges(edges, input.text);
+                    update_graph(n, edges, graph);
+                    build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
                 }
             }
         }

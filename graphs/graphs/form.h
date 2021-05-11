@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <ctype.h>
 
 using namespace std;
 using namespace sf;
@@ -137,6 +138,11 @@ namespace form {
             if (_tmp == '\n' + 3) {
                 return;
             }
+
+            if (!isdigit(_tmp) && !isspace(_tmp) && _tmp != 8) {
+                return;
+            }
+
             int last = text.size() - 1;
             text[last].erase(text[last].size() - 1);
 
