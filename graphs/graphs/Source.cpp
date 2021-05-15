@@ -73,13 +73,41 @@ int main() {
 
     int vertex_focus = -1;
     Vector2i pos0;
+    Vector2i shift = Vector2i({ 0, 0 });
+    int start_edge = -1;
+
+    bool edge_closed = false;
+
     while (window.isOpen()) {
         if (cnt == 0) {
             start.update();
         }
 
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event)) {   
+
+            if (edge_closed) {
+                if (event.type == sf::Event::TextEntered) {
+                    char digit = event.text.unicode;
+                    if (isdigit(digit)) {
+                        edges.back().w = edges.back().w * 10 + (digit - '0');
+                    }
+
+                }
+                if (event.type == sf::Event::KeyPressed) {
+                    if (event.key.code == sf::Keyboard::Escape) {
+                        window.close();
+                    }
+                    if (event.key.code == sf::Keyboard::Enter) {
+                        edge_closed = false;
+                    }
+                    if (event.key.code == sf::Keyboard::BackSpace) {
+                        edges.back().w /= 10;
+                    }
+                }
+                continue;
+            }
+
             if (event.type == sf::Event::Closed) {
                 window.close();
                 return 0;
@@ -97,9 +125,37 @@ int main() {
                         break;
                     }
                 }
+                if (vertex_focus == -1 &&
+                    !(mouse.x < graph_space.getPosition().x + radius ||
+                    mouse.x > graph_space.getPosition().x + graph_space.getSize().x - radius ||
+                    mouse.y < graph_space.getPosition().y + radius ||
+                    mouse.y > graph_space.getPosition().y + graph_space.getSize().y - radius)) {
+                    poly.push_back({ mouse.x, mouse.y });
+                    graph.resize(graph.size() + 1);
+                }
             }
-            if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+                if (vertex_focus != -1 &&  shift == Vector2i({ 0, 0 }) && start_edge == -1) {
+                    start_edge = vertex_focus;
+                }
+                else if (start_edge != -1) {
+                    if (vertex_focus != -1) {
+                        edges.push_back({ start_edge, vertex_focus, 0 });
+                    }
+                    else {
+                        edges.push_back({ start_edge, (int)graph.size() - 1, 0 });
+                    }
+                    start_edge = -1;
+                    edge_closed = true;
+                }
+
                 vertex_focus = -1;
+                shift = Vector2i({ 0, 0 });
+            }
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right) {
+                if (start_edge != -1) {
+                    start_edge = -1;
+                }
             }
             if (event.type == sf::Event::TextEntered) {
                 if (input.select()) {
@@ -137,6 +193,8 @@ int main() {
             }
             poly[vertex_focus].first += mouse.x - pos0.x;
             poly[vertex_focus].second += mouse.y - pos0.y;
+            shift.x += mouse.x - pos0.x;
+            shift.y += mouse.y - pos0.y;
             pos0 = mouse;
         }
 
@@ -148,7 +206,11 @@ int main() {
         start.displayText(window);
         window.draw(graph_space);
 
-        draw_graph(poly, graph, edges, window);
+        if (start_edge != -1) {
+            Vector2i mouse = Mouse::getPosition(window);
+            draw_edge(poly[start_edge], { mouse.x, mouse.y }, 0, 0, 0, window);
+        }
+        draw_graph(poly, graph, edges, edge_closed, window);
         window.display();
 
         //sleep(milliseconds(1000 / 60));

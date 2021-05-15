@@ -57,20 +57,27 @@ void draw_line(pair<double, double> v1, pair<double, double> v2, Color clr, Rend
 }
 
 template<typename T>
-void draw_text(pair<double, double> v, T w, RenderWindow& window) {
+void draw_text(pair<double, double> v, T w, bool add_edge, RenderWindow& window) {
     Font font;
-    font.loadFromFile("Times-New-Roman.ttf");
+    font.loadFromFile("Roboto-Regular.ttf");
     Text TXT;
     TXT.setFont(font);
     TXT.setCharacterSize(20);
-    TXT.setFillColor(Color::Black);
     TXT.setPosition(v.first, v.second);
-    wstring str = L"√" + to_wstring(w);
-    TXT.setString(str);
+    if (!add_edge) {
+        TXT.setFillColor(Color::Black);
+        wstring str = L"√" + to_wstring(w);
+        TXT.setString(str);
+    }
+    else {
+        TXT.setFillColor(Color::Blue);
+        string str = (w != 0 ? to_string(w) : "") + "|";
+        TXT.setString(str);
+    }
     window.draw(TXT);
 }
 
-void draw_edge(pair<double, double> v1, pair<double, double> v2, int w, RenderWindow& window) {
+void draw_edge(pair<double, double> v1, pair<double, double> v2, int w, bool draw_arrow, bool add_edge, RenderWindow& window) {
     draw_line(v1, v2, Color::Black, window);
     pair<double, double> d = minus_pair(v1, v2);
     pair<double, double> arrow1 = plus_pair(norm_for_arrow(rotate(d, angle_of_rot_arrow)), v2);
@@ -79,21 +86,24 @@ void draw_edge(pair<double, double> v1, pair<double, double> v2, int w, RenderWi
     k = radius / k;
     d.first *= k;
     d.second *= k;
-    draw_line(plus_pair(v2, d), arrow1, Color::Black, window);
-    draw_line(plus_pair(v2, d), arrow2, Color::Black, window);
 
-    pair<double, double> v = { v2.first - v1.first, v2.second - v1.second };
-    auto norm = rotate(v, 90);
-    norm = norm_for_arrow(norm);
-    norm.first /= 2.0;
-    norm.second /= 2.0;
-    v.first /= 2.0;
-    v.second /= 2.0;
-    norm.first += v.first;
-    norm.second += v.second;
-    norm.first += v1.first;
-    norm.second += v1.second;
-    draw_text(norm, w, window);
+    if (draw_arrow) {
+        draw_line(plus_pair(v2, d), arrow1, Color::Black, window);
+        draw_line(plus_pair(v2, d), arrow2, Color::Black, window);
+
+        pair<double, double> v = { v2.first - v1.first, v2.second - v1.second };
+        auto norm = rotate(v, 90);
+        norm = norm_for_arrow(norm);
+        norm.first /= 2.0;
+        norm.second /= 2.0;
+        v.first /= 2.0;
+        v.second /= 2.0;
+        norm.first += v.first;
+        norm.second += v.second;
+        norm.first += v1.first;
+        norm.second += v1.second;
+        draw_text(norm, w, add_edge, window);
+    }
 
     return;
 }
@@ -160,9 +170,10 @@ void build_component(int x, int y, int width, int height, vector<int>& vertex, v
     return;
 }
 
-void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph, vector<Edge>& edges, RenderWindow& window) {
-    for (auto e : edges) {
-        draw_edge(poly[e.v], poly[e.u], e.w, window);
+void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph, vector<Edge>& edges, bool add_edge, RenderWindow& window) {
+    for (int i = 0; i < edges.size(); ++i) {
+        auto e = edges[i];
+        draw_edge(poly[e.v], poly[e.u], e.w, 1, add_edge && (i == edges.size() - 1), window);
     }
     
     for (int i = 0; i < graph.size(); ++i) {
