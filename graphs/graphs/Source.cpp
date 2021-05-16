@@ -100,6 +100,10 @@ int main() {
                     }
                     if (event.key.code == sf::Keyboard::Enter) {
                         edge_closed = false;
+                        input.text.back() += to_string(edges.back().v + 1) + " " +
+                            to_string(edges.back().u + 1) + " " +
+                            to_string(edges.back().w);
+                        input.text.push_back("");
                     }
                     if (event.key.code == sf::Keyboard::BackSpace) {
                         edges.back().w /= 10;
@@ -161,7 +165,7 @@ int main() {
                 if (input.select()) {
                     int sz = input.text.size();
                     input.reText(event.text.unicode);
-                    if (input.text.size() != sz) {
+                    if (input.text.size() != sz || (input.text.size() == 1 && input.text[0].size() == 1)) {
                         update_edges(edges, input.text);
                         update_graph(n, edges, graph);
                         build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
