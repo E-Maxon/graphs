@@ -55,7 +55,7 @@ int main() {
     background.setSize(Vector2f(width, height));
     background.setFillColor(Color(33, 33, 33));
     Input input(2.0 * width / 3.0 + outline, height / 10.0, width / 3.0 - 2.0 * outline, 6.0 * height / 10.0, Color::White, Color::Black, Color(124, 124, 124));
-    Button start(2.0 * width / 3.0 + outline, 8.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Go!", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color::Green, 30);
+    Button start(2.0 * width / 3.0 + outline, 8.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Go!", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
     RectangleShape graph_space;
     graph_space.setSize(Vector2f(2.0 * width / 3.0 - outline, 8.0 * height / 10.0));
     graph_space.setPosition(Vector2f(outline, height / 10.0));
@@ -65,8 +65,6 @@ int main() {
     vector<Edge> edges;
 
     int n;
-
-    int cnt = 0;
 
     vector<pair<double, double> > poly;
     //build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
@@ -79,12 +77,11 @@ int main() {
     bool edge_closed = false;
 
     while (window.isOpen()) {
-        if (cnt == 0) {
-            start.update();
-        }
 
         sf::Event event;
         while (window.pollEvent(event)) {   
+
+            start.update(Mouse::getPosition(window));
 
             if (edge_closed) {
                 if (event.type == sf::Event::TextEntered) {
@@ -218,6 +215,5 @@ int main() {
         window.display();
 
         //sleep(milliseconds(1000 / 60));
-        cnt = (cnt + 1) % 50;
     }
 }

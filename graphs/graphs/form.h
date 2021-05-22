@@ -45,16 +45,19 @@ namespace form {
 
     class Button : public Label {
     protected:
+        int cnt;
         double width;		// Ширина Кнопки
         double height;		// Высота Кнопки
         RectangleShape BOX;	// Создаем прямоугольник с размером width, height
         Color clr;
         Color clr_pressed;
+        Color clr_selected;
     public:
-        Button(double _x = 0, double _y = 0, double _width = 150, double _height = 30, string _text = "", Color _bcolor = Color::White, Color _tcolor = Color::Black, Color _outcolor = Color::Black, Color _color_pressed = Color::Green, int _sz = 20)
+        Button(double _x = 0, double _y = 0, double _width = 150, double _height = 30, string _text = "", Color _bcolor = Color::White, Color _tcolor = Color::Black, Color _outcolor = Color::Black, Color _color_pressed = Color::Green, Color _color_selected = Color::Blue, int _sz = 20)
         {
             None.loadFromFile("Roboto-Regular.ttf");			//передаем нашему шрифту файл шрифта
 
+            cnt = 0;
             sz = _sz;
             x = _x;
             y = _y;
@@ -69,6 +72,7 @@ namespace form {
             
             clr = _bcolor;
             clr_pressed = _color_pressed;
+            clr_selected = _color_selected;
 
             BOX.setSize(Vector2f(width, height));		// размер кнопки
             BOX.setPosition(x, y);						// координаты кнопки
@@ -98,8 +102,25 @@ namespace form {
             return BOX;
         }
 
-        void update() {
-            BOX.setFillColor(clr);
+        void selected() {
+            BOX.setFillColor(clr_selected);
+        }
+
+        void update(Vector2i mouse) {
+            if (BOX.getFillColor() == clr_pressed) {
+                ++cnt;
+                if (cnt == 50) {
+                    BOX.setFillColor(clr);
+                    cnt = 0;
+                }
+            }
+
+            if (select(mouse)) {
+                selected();
+            }
+            else {
+                BOX.setFillColor(clr);
+            }
         }
 
         void press() {
