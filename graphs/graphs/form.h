@@ -13,6 +13,8 @@ namespace form {
     public:
         vector<string> text;	//Текст
     protected:
+        double width;		// Ширина Кнопки
+        double height;		// Высота Кнопки
         double x;		//Координата x
         double y;		//Координата y
         int sz = 20;
@@ -46,8 +48,6 @@ namespace form {
     class Button : public Label {
     protected:
         int cnt;
-        double width;		// Ширина Кнопки
-        double height;		// Высота Кнопки
         RectangleShape BOX;	// Создаем прямоугольник с размером width, height
         Color clr;
         Color clr_pressed;
@@ -67,7 +67,7 @@ namespace form {
             TXT.setFont(None);							// загружаем фрифт
             TXT.setCharacterSize(sz); 					// в пикселях, а не точках!
             TXT.setFillColor(_tcolor);					// устанавливаем цвет выводимого текста
-            TXT.setPosition(x + width / 2.0 - sz, y + height / 2.0 - sz);						// позиция текста
+            TXT.setPosition(x + width / 2.0 - sz * _text.size() / 4, y + height / 2.0 - sz);						// позиция текста
             TXT.setString(_text);
             
             clr = _bcolor;
