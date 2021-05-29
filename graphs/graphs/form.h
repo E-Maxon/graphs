@@ -13,10 +13,11 @@ namespace form {
     public:
         vector<string> text;	//Текст
     protected:
+        double width;		// Ширина Кнопки
+        double height;		// Высота Кнопки
         double x;		//Координата x
         double y;		//Координата y
         int sz = 20;
-        bool is_pressed = false;
         Text TXT;		//Отображаемый текст
 
     public:
@@ -47,8 +48,6 @@ namespace form {
     class Button : public Label {
     protected:
         int cnt;
-        double width;		// Ширина Кнопки
-        double height;		// Высота Кнопки
         RectangleShape BOX;	// Создаем прямоугольник с размером width, height
         Color clr;
         Color clr_pressed;
@@ -68,7 +67,7 @@ namespace form {
             TXT.setFont(None);							// загружаем фрифт
             TXT.setCharacterSize(sz); 					// в пикселях, а не точках!
             TXT.setFillColor(_tcolor);					// устанавливаем цвет выводимого текста
-            TXT.setPosition(x + width / 2.0 - sz, y + height / 2.0 - sz);						// позиция текста
+            TXT.setPosition(x + width / 2.0 - sz * _text.size() / 4, y + height / 2.0 - sz);						// позиция текста
             TXT.setString(_text);
             
             clr = _bcolor;
@@ -108,25 +107,24 @@ namespace form {
         }
 
         void update(Vector2i mouse) {
-            if (!is_pressed) {
-                if (select(mouse)) {
-                    selected();
-                }
-                else {
+            if (BOX.getFillColor() == clr_pressed) {
+                ++cnt;
+                if (cnt == 50) {
                     BOX.setFillColor(clr);
+                    cnt = 0;
                 }
+            }
+
+            if (select(mouse)) {
+                selected();
+            }
+            else {
+                BOX.setFillColor(clr);
             }
         }
 
         void press() {
-            if (!is_pressed) {
-                BOX.setFillColor(clr_pressed);
-                is_pressed = true;
-            }
-            else {
-                BOX.setFillColor(clr);
-                is_pressed = false;
-            }
+            BOX.setFillColor(clr_pressed);
         }
     };
 
