@@ -4,12 +4,14 @@
 #include "condense.h"
 #include "topsort.h"
 #include "hamilton.h"
+#include "sim.hpp"
 
 using namespace std;
 using namespace sf;
 
 const double PI = 3.14159265;
 const double radius = 30;
+const double radius_point = 6;
 const double size_of_arrows = 50;
 const double angle_of_rot_arrow = 10;
 
@@ -39,12 +41,16 @@ pair<double, double> minus_pair(pair<double, double> v1, pair<double, double> v2
     return { x, y };
 }
 
+pair<double, double> mult_on_k_pair(pair<double, double> v, double k) {
+    double x = v.first * k;
+    double y = v.second * k;
+    return { x, y };
+}
+
 pair<double, double> norm_for_arrow(pair<double, double> v) {
     double k = sqrt(v.first * v.first + v.second * v.second);
     k = size_of_arrows / k;
-    double x = v.first*k;
-    double y = v.second*k;
-    return { x, y };
+    return mult_on_k_pair(v, k);
 }
 
 void draw_line(pair<double, double> v1, pair<double, double> v2, Color clr, RenderWindow& window) {
@@ -134,6 +140,26 @@ void draw_vertex(pair<double, double> v, int num, RenderWindow& window) {
 bool intersect(pair<double, double> p, double x, double y) {
     double sqdist = (x - p.first) * (x - p.first) + (y - p.second) * (y - p.second);
     return sqdist <= radius * radius;
+}
+
+
+void draw_point(pair<double, double> v, RenderWindow& window) {
+    CircleShape circle(radius_point);
+    circle.setPosition(v.first - radius_point, v.second - radius_point);
+    circle.setFillColor(Color(182, 47, 146));
+    window.draw(circle);
+    return;
+}
+
+void draw_all_points(vector<pair<double, double> >& poly, vector<vector<int> >& graph, vector<Edge>& edges, PointsSet& points, int t, RenderWindow& window) {
+    for (int i = 0; i < points.size(); ++i) {
+        auto p = points[i];
+        pair<double, double> u = poly[edges[p.edgeNum].u], v = poly[edges[p.edgeNum].v];
+        double w = sqrt(edges[p.edgeNum].w), path = t - p.start;
+        double k = path / w;
+        pair<double, double> cord = plus_pair(v, mult_on_k_pair(minus_pair(u, v), k));
+        draw_point(cord, window);
+    }
 }
 
 void build_component(int x, int y, int width, int height, vector<int>& vertex, vector<pair<double, double> >& poly) {

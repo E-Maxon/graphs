@@ -16,6 +16,7 @@ namespace form {
         double x;		//Координата x
         double y;		//Координата y
         int sz = 20;
+        bool is_pressed = false;
         Text TXT;		//Отображаемый текст
 
     public:
@@ -107,24 +108,25 @@ namespace form {
         }
 
         void update(Vector2i mouse) {
-            if (BOX.getFillColor() == clr_pressed) {
-                ++cnt;
-                if (cnt == 50) {
-                    BOX.setFillColor(clr);
-                    cnt = 0;
+            if (!is_pressed) {
+                if (select(mouse)) {
+                    selected();
                 }
-            }
-
-            if (select(mouse)) {
-                selected();
-            }
-            else {
-                BOX.setFillColor(clr);
+                else {
+                    BOX.setFillColor(clr);
+                }
             }
         }
 
         void press() {
-            BOX.setFillColor(clr_pressed);
+            if (!is_pressed) {
+                BOX.setFillColor(clr_pressed);
+                is_pressed = true;
+            }
+            else {
+                BOX.setFillColor(clr);
+                is_pressed = false;
+            }
         }
     };
 

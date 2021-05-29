@@ -55,7 +55,7 @@ int main() {
     background.setSize(Vector2f(width, height));
     background.setFillColor(Color(33, 33, 33));
     Input input(2.0 * width / 3.0 + outline, height / 10.0, width / 3.0 - 2.0 * outline, 6.0 * height / 10.0, Color::White, Color::Black, Color(124, 124, 124));
-    Button start(2.0 * width / 3.0 + outline, 8.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Go!", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
+    Button start(2.0 * width / 3.0 + outline, 8.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Go!", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(68, 193, 94), Color(126, 197, 215), 30);
     RectangleShape graph_space;
     graph_space.setSize(Vector2f(2.0 * width / 3.0 - outline, 8.0 * height / 10.0));
     graph_space.setPosition(Vector2f(outline, height / 10.0));
@@ -65,6 +65,8 @@ int main() {
     vector<Edge> edges;
 
     int n;
+
+    int cnt = 0;
 
     vector<pair<double, double> > poly;
     //build_graph(graph_space.getPosition().x + (graph_space.getSize().x - graph_space.getSize().y) / 2, graph_space.getPosition().y, graph_space.getSize().y, graph_space.getSize().y, graph, poly);
@@ -76,14 +78,17 @@ int main() {
 
     bool edge_closed = false;
 
-    while (window.isOpen()) {
+    bool moving_points = false;
+    int t = 0;
+    int prep = 100;
+    Graph<double> g;
 
+    while (window.isOpen()) {
+        start.update(Mouse::getPosition(window));
         sf::Event event;
         while (window.pollEvent(event)) {   
 
-            start.update(Mouse::getPosition(window));
-
-            if (edge_closed) {
+            if (edge_closed && !moving_points) {
                 if (event.type == sf::Event::TextEntered) {
                     char digit = event.text.unicode;
                     if (isdigit(digit)) {
@@ -118,6 +123,16 @@ int main() {
                 input.select(mouse);			//поле ввода
                 if (start.select(mouse)) {
                     start.press();
+                    if (!moving_points) {
+                        moving_points = true;
+                        g = Graph<double>(graph.size(), edges.size(), 0);
+                        for (int i = 0; i < edges.size(); i++)
+                            g.addEdge(edges[i].v, edges[i].u, edges[i].w, i);
+                        g.precalcPoints(prep);
+                    }
+                    else {
+                        moving_points = false;
+                    }
                 }
                 for (int i = (int)poly.size() - 1; i >= 0; --i) {
                     if (intersect(poly[i], mouse.x, mouse.y)) {
@@ -130,7 +145,7 @@ int main() {
                     !(mouse.x < graph_space.getPosition().x + radius ||
                     mouse.x > graph_space.getPosition().x + graph_space.getSize().x - radius ||
                     mouse.y < graph_space.getPosition().y + radius ||
-                    mouse.y > graph_space.getPosition().y + graph_space.getSize().y - radius)) {
+                    mouse.y > graph_space.getPosition().y + graph_space.getSize().y - radius) && !moving_points) {
                     poly.push_back({ mouse.x, mouse.y });
                     graph.resize(graph.size() + 1);
                 }
@@ -139,7 +154,7 @@ int main() {
                 if (vertex_focus != -1 &&  shift == Vector2i({ 0, 0 }) && start_edge == -1) {
                     start_edge = vertex_focus;
                 }
-                else if (start_edge != -1) {
+                else if (start_edge != -1 && !moving_points) {
                     if (vertex_focus != -1) {
                         edges.push_back({ start_edge, vertex_focus, 0 });
                     }
@@ -153,12 +168,12 @@ int main() {
                 vertex_focus = -1;
                 shift = Vector2i({ 0, 0 });
             }
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right) {
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right && !moving_points) {
                 if (start_edge != -1) {
                     start_edge = -1;
                 }
             }
-            if (event.type == sf::Event::TextEntered) {
+            if (event.type == sf::Event::TextEntered && !moving_points) {
                 if (input.select()) {
                     int sz = input.text.size();
                     input.reText(event.text.unicode);
@@ -170,11 +185,11 @@ int main() {
                 }
 
             }
-            if (event.type == sf::Event::KeyPressed) {
+            if (event.type == sf::Event::KeyPressed && !moving_points) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 }
-                if (event.key.code == sf::Keyboard::Enter && input.select()) {
+                if (event.key.code == sf::Keyboard::Enter && input.select() && !moving_points) {
                     input.text[input.text.size() - 1].pop_back();
                     input.text.push_back("|");
                     update_edges(edges, input.text);
@@ -207,13 +222,22 @@ int main() {
         start.displayText(window);
         window.draw(graph_space);
 
-        if (start_edge != -1) {
+        if (start_edge != -1 && !moving_points) {
             Vector2i mouse = Mouse::getPosition(window);
             draw_edge(poly[start_edge], { mouse.x, mouse.y }, 0, 0, 0, window);
         }
         draw_graph(poly, graph, edges, edge_closed, window);
-        window.display();
 
-        //sleep(milliseconds(1000 / 60));
+        if (moving_points) {
+            if (t == prep) {
+                prep += 100;
+                g.precalcPoints(prep);
+            }
+            PointsSet points = g.getPoints(t);
+            draw_all_points(poly, graph, edges, points, t, window);
+            t++;
+            sleep(milliseconds(50));
+        }
+        window.display();
     }
 }
