@@ -22,7 +22,7 @@ void update_graph(int& n, vector<Edge>& edges, vector<vector<int> >& graph) {
     }
 
     graph.resize(n + 1);
-    
+
     for (auto edge : edges) {
         graph[edge.v].push_back(edge.u);
     }
@@ -211,16 +211,19 @@ bool input_mode(RenderWindow& window, Button& start, bool& edge_closed, vector<E
     return false;
 }
 
+bool paused = false;
+int t = 0;
+int prep = 100;
+
 int moving_points_mode(RenderWindow& window, Button& start, vector<Edge>& edges,
     vector<pair<double, double> >& poly, int& vertex_focus, Vector2i& pos0, RectangleShape& graph_space,
     vector<vector<int> >& graph, Vector2i& shift, int& n, RectangleShape& background,
     Graph<double>& g) {
-    
+
     Button stop(2.0 * width / 3.0 + outline, 8.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Stop", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
     Button pause(2.0 * width / 3.0 + outline, 5.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Pause", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
-    bool paused = false;
-    int t = 0;
-    int prep = 100;
+    
+
     Button view_plot(2.0 * width / 3.0 + outline, 6.5 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "View plot", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
 
     while (window.isOpen()) {
@@ -234,12 +237,13 @@ int moving_points_mode(RenderWindow& window, Button& start, vector<Edge>& edges,
                 return 1;
             }
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                Vector2i mouse = Mouse::getPosition(window); 
-                if (stop.select(mouse))      
+                Vector2i mouse = Mouse::getPosition(window);
+                if (stop.select(mouse))
                     return 0;
                 if (view_plot.select(mouse))
-                    return 2; 
+                    return 2;
                 if (pause.select(mouse)) {
+                    pause.press();
                     if (!paused)
                         paused = true;
                     else
@@ -315,7 +319,7 @@ bool plot_mode(RenderWindow& window, RectangleShape& background, Graph<double>& 
 
     auto time0 = clock();
 
-    graph_points.precalc(300);
+    graph_points.precalc(max(300, t));
 
     while (window.isOpen()) {
         window.clear();
@@ -337,7 +341,7 @@ bool plot_mode(RenderWindow& window, RectangleShape& background, Graph<double>& 
         window.draw(plot_space);
         //draw_edge({ outline * 2, height - 2 * outline }, { outline * 2, outline * 2 }, 0, true, false, window);
         //draw_edge({ outline * 2, height - 2 * outline }, { width - outline * 2, height - outline * 2 }, 0, true, false, window);
-        draw_plot((clock() - time0) / CLK_TCK, graph_points, outline * 2,
+        draw_plot(t, graph_points, outline * 2,
             height - 3 * outline, width - 4 * outline, height - 5 * outline, window, edges.size() - graph.size());
         window.display();
     }
@@ -393,7 +397,7 @@ int main() {
                 mode = 1;
             }
         }
-        
+
         window.display();
 
         //sleep(milliseconds(1000 / 60));

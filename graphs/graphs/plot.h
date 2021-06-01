@@ -4,7 +4,7 @@ void draw_plot_point(double x, double y, RenderWindow& window) {
     CircleShape p;
     p.setPosition(x - 4, y - 4);
     p.setRadius(4);
-    p.setFillColor(Color::Blue);
+    p.setFillColor(Color(23, 42, 135)/*Color::Blue*/);
     window.draw(p);
 }
 
@@ -69,14 +69,14 @@ void draw_axis(pair<double, double> v1, pair<double, double> v2, int cnt, double
     }
 }
 
-void draw_plot(clock_t tm, Graph<double>& graph, double x0, double y0, double w, double h, RenderWindow& window, int alpha) {
+void draw_plot(int t, Graph<double>& graph, double x0, double y0, double w, double h, RenderWindow& window, int alpha) {
 
     const double height = 900;
     const double width = 1800;
     const double outline = 30;
 
     //int cnt = min((int)(tm) * 20, 1000);
-    int cnt = 300;
+    int cnt = max(300, t);
 
     vector<double> points(cnt + 1);
     double mx = 0;
@@ -88,6 +88,8 @@ void draw_plot(clock_t tm, Graph<double>& graph, double x0, double y0, double w,
 
     draw_axis({ outline * 2, height - 3 * outline }, { outline * 2, outline * 2 }, 10, 0, mx, false, window);
     draw_axis({ outline * 2, height - 3 * outline }, { width - outline * 2, height - outline * 3 }, 10, 0, cnt, true, window);
+
+    draw_line({ (double)t / (double)cnt * (double)(width - outline * 2), height - 3 * outline }, { (double)t / (double)cnt * (double)(width - outline * 2), outline * 2 }, Color::Red, window);
 
     double prevx;
     double prevy;

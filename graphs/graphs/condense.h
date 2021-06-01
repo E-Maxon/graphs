@@ -6,11 +6,11 @@ using namespace std;
 
 vector<int> comps;
 
-void dfs1(int v, vector<vector<int> >& grph, vector<int>& top_sort, vector<bool>& used) {
+void dfs1(int v, vector<vector<int> >& graph, vector<int>& top_sort, vector<bool>& used) {
     used[v] = true;
-    for (auto u : grph[v]) {
+    for (auto u : graph[v]) {
         if (!used[u]) {
-            dfs1(u, grph, top_sort, used);
+            dfs1(u, graph, top_sort, used);
         }
     }
     top_sort.push_back(v);
@@ -28,22 +28,22 @@ void dfs2(int v, int k, vector<vector<int> >& grcomp, vector<vector<int> >& Tgr)
     return;
 }
 
-vector<vector<int> > condense(vector<vector<int> >& grph) {
+vector<vector<int> > condense(vector<vector<int> >& graph) {
     vector<vector<int> > Tgr, grcomp;
     vector<bool> used;
     vector<int> top_sort;
 
-    int n = grph.size();
+    int n = graph.size();
     Tgr.resize(n);
     for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < grph[i].size(); ++j) {
-            Tgr[grph[i][j]].push_back(i);
+        for (int j = 0; j < graph[i].size(); ++j) {
+            Tgr[graph[i][j]].push_back(i);
         }
     }
     used.assign(n, false);
     for (int i = 0; i < n; ++i) {
         if (!used[i]) {
-            dfs1(i, grph, top_sort, used);
+            dfs1(i, graph, top_sort, used);
         }
     }
     reverse(top_sort.begin(), top_sort.end());

@@ -129,8 +129,13 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="condense.h" />
     <ClInclude Include="form.h" />
     <ClInclude Include="graph.h" />
+    <ClInclude Include="hamilton.h" />
+    <ClInclude Include="plot.h" />
+    <ClInclude Include="points_on_edges.h" />
+    <ClInclude Include="topsort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

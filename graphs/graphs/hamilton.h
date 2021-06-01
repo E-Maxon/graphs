@@ -55,7 +55,6 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
     vector<int> tmp;
     while (prev[mask][v] != -1) {
         tmp.push_back(comp[v]);
-        cout << comp[v] + 1 << " ";
         auto tmp2 = mask ^ (1 << v);
         v = prev[mask][v];
         mask = tmp2;
