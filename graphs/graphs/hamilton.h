@@ -64,7 +64,7 @@ void sort_comp(vector<int>& comp, const vector<vector<int> >& graph) {
     comp = tmp;
 }
 
-void sort_by_hamilthonian_path(vector<vector<int> >& comp, const vector<vector<int> >& graph) {
+void sort_by_hamilthonian_cycle(vector<vector<int> >& comp, const vector<vector<int> >& graph) {
     for (int i = 0; i < comp.size(); ++i) {
         sort_comp(comp[i], graph);
     }

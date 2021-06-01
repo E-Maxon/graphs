@@ -145,7 +145,7 @@ bool intersect(pair<double, double> p, double x, double y) {
 void draw_point(pair<double, double> v, RenderWindow& window) {
     CircleShape circle(radius_point);
     circle.setPosition(v.first - radius_point, v.second - radius_point);
-    circle.setFillColor(Color::Blue/*Color(182, 47, 146)*/);
+    circle.setFillColor(Color(0, 173, 181)/*Color(182, 47, 146)*/);
     window.draw(circle);
     return;
 }
@@ -195,8 +195,10 @@ void build_component(int x, int y, int width, int height, vector<int>& vertex, v
     return;
 }
 
+PointsSet empt = {};
+
 void draw_graph(vector<pair<double, double> >& poly, vector<vector<int> >& graph, vector<Edge>& edges, bool add_edge, RenderWindow& window,
-    bool is_points, PointsSet points = {}, int t = 0) {
+    bool is_points, PointsSet& points = empt, int t = 0) {
     for (int i = 0; i < edges.size(); ++i) {
         auto e = edges[i];
         draw_edge(poly[e.v], poly[e.u], e.w, 1, add_edge && (i == edges.size() - 1), window);

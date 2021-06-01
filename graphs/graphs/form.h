@@ -107,25 +107,12 @@ namespace form {
         }
 
         void update(Vector2i mouse) {
-            if (BOX.getFillColor() == clr_pressed) {
-                ++cnt;
-                if (cnt == 50) {
-                    BOX.setFillColor(clr);
-                    cnt = 0;
-                }
-            }
-
-            if (select(mouse)) {
+            if (select(mouse))
                 selected();
-            }
-            else {
+            else 
                 BOX.setFillColor(clr);
-            }
         }
 
-        void press() {
-            BOX.setFillColor(clr_pressed);
-        }
     };
 
     class Input : public Button {

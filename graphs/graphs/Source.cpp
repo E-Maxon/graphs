@@ -97,12 +97,19 @@ bool input_mode(RenderWindow& window, Button& start, bool& edge_closed, vector<E
                 Vector2i mouse = Mouse::getPosition(window); // Считываем координаты мыши(если че обратиться можно будет mouse.x mouse.y)
                 input.select(mouse);			//поле ввода
                 if (start.select(mouse)) {
-                    start.press();
                     g = Graph<double>(graph.size(), edges.size(), 0);
                     for (int i = 0; i < edges.size(); i++) {
                         g.addEdge(edges[i].v, edges[i].u, edges[i].w, i);
                     }
                     g.precalcPoints(100);
+
+                    window.draw(input.displayButton());
+                    input.displayText(window);
+                    window.draw(start.displayButton());
+                    start.displayText(window);
+                    window.draw(graph_space);
+                    draw_graph(poly, graph, edges, edge_closed, window, 0);
+                    window.display();
                     return true;
                 }
                 for (int i = (int)poly.size() - 1; i >= 0; --i) {
@@ -210,14 +217,15 @@ int moving_points_mode(RenderWindow& window, Button& start, vector<Edge>& edges,
     Graph<double>& g) {
     
     Button stop(2.0 * width / 3.0 + outline, 8.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Stop", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
-
-    bool moving_points = false;
+    Button pause(2.0 * width / 3.0 + outline, 5.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "Pause", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
+    bool paused = false;
     int t = 0;
     int prep = 100;
-    Button view_plot(2.0 * width / 3.0 + outline, 6.0 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "View plot", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
+    Button view_plot(2.0 * width / 3.0 + outline, 6.5 * height / 10.0, width / 3.0 - 2.0 * outline, height / 10.0, "View plot", Color(176, 195, 234), Color::Black, Color(124, 124, 124), Color(102, 235, 85), Color(113, 176, 240), 30);
 
     while (window.isOpen()) {
         stop.update(Mouse::getPosition(window));
+        pause.update(Mouse::getPosition(window));
         view_plot.update(Mouse::getPosition(window));
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -227,13 +235,15 @@ int moving_points_mode(RenderWindow& window, Button& start, vector<Edge>& edges,
             }
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                 Vector2i mouse = Mouse::getPosition(window); 
-                if (stop.select(mouse)) {
-                    stop.press();
+                if (stop.select(mouse))      
                     return 0;
-                }
-                if (view_plot.select(mouse)) {
-                    view_plot.press();
-                    return 2;
+                if (view_plot.select(mouse))
+                    return 2; 
+                if (pause.select(mouse)) {
+                    if (!paused)
+                        paused = true;
+                    else
+                        paused = false;
                 }
                 for (int i = (int)poly.size() - 1; i >= 0; --i) {
                     if (intersect(poly[i], mouse.x, mouse.y)) {
@@ -247,7 +257,7 @@ int moving_points_mode(RenderWindow& window, Button& start, vector<Edge>& edges,
                 vertex_focus = -1;
                 shift = Vector2i({ 0, 0 });
             }
-            if (event.type == sf::Event::KeyPressed && !moving_points) {
+            if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                     return 1;
@@ -270,27 +280,28 @@ int moving_points_mode(RenderWindow& window, Button& start, vector<Edge>& edges,
             pos0 = mouse;
         }
 
+        PointsSet points = g.getPoints(t);
+
         window.clear();
         window.draw(background);
         window.draw(stop.displayButton());
         window.draw(view_plot.displayButton());
+        window.draw(pause.displayButton());
         view_plot.displayText(window);
         stop.displayText(window);
+        pause.displayText(window);
         window.draw(graph_space);
-
-        if (t == prep) {
-            prep += 100;
-            g.precalcPoints(prep);
-        }
-        PointsSet points = g.getPoints(t);
-
         draw_graph(poly, graph, edges, 0, window, 1, points, t);
-        
-        t++;
-
-        sleep(milliseconds(50));
-
         window.display();
+
+        if (!paused) {
+            if (t == prep) {
+                prep += 100;
+                g.precalcPoints(prep);
+            }
+            t++;
+            sleep(milliseconds(50));
+        }
     }
     return 1;
 }
