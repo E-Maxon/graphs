@@ -387,6 +387,8 @@ int main() {
             if (input_mode(window, start, edge_closed, edges, input, poly,
                 vertex_focus, pos0, graph_space, graph, shift, start_edge, n, background, g)) {
                 mode = 1;
+                t = 0;
+                prep = 100;
             }
         }
         else if (mode == 1) {
