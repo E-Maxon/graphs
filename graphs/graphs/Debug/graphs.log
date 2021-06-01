@@ -1,24 +1,37 @@
 ﻿  Source.cpp
-c:\users\мсай\source\repos\graphs\graphs\form.h(32): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\form.h(36): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\мсай\source\repos\graphs\graphs\form.h(37): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\form.h(66): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\form.h(72): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(35): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(39): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\form.h(40): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(70): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(77): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-c:\users\мсай\source\repos\graphs\graphs\form.h(73): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\form.h(127): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\form.h(129): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(78): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(148): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(150): warning C4244: аргумент: преобразование "double" в "T", возможна потеря данных
           with
           [
               T=float
           ]
-c:\users\мсай\source\repos\graphs\graphs\form.h(130): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\form.h(191): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\мсай\source\repos\graphs\graphs\form.h(192): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\graph.h(19): warning C4244: аргумент: преобразование "_Ty2" в "T", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(151): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\form.h(217): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\form.h(218): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\condense.h(39): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\topsort.h(25): warning C4018: <=: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\topsort.h(42): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\topsort.h(65): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\topsort.h(66): warning C4018: >: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\hamilton.h(67): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(41): warning C4018: >=: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(527): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(577): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(631): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(632): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(686): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(687): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(58): warning C4244: аргумент: преобразование "_Ty2" в "T", возможна потеря данных
           with
           [
               _Ty2=double
@@ -27,7 +40,7 @@ c:\users\мсай\source\repos\graphs\graphs\graph.h(19): warning C4244: арг�
           [
               T=float
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(19): warning C4244: аргумент: преобразование "_Ty1" в "T", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(58): warning C4244: аргумент: преобразование "_Ty1" в "T", возможна потеря данных
           with
           [
               _Ty1=double
@@ -36,7 +49,7 @@ c:\users\мсай\source\repos\graphs\graphs\graph.h(19): warning C4244: арг�
           [
               T=float
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(21): warning C4244: аргумент: преобразование "_Ty2" в "T", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(60): warning C4244: аргумент: преобразование "_Ty2" в "T", возможна потеря данных
           with
           [
               _Ty2=double
@@ -45,7 +58,7 @@ c:\users\мсай\source\repos\graphs\graphs\graph.h(21): warning C4244: арг�
           [
               T=float
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(21): warning C4244: аргумент: преобразование "_Ty1" в "T", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(60): warning C4244: аргумент: преобразование "_Ty1" в "T", возможна потеря данных
           with
           [
               _Ty1=double
@@ -54,30 +67,110 @@ c:\users\мсай\source\repos\graphs\graphs\graph.h(21): warning C4244: арг�
           [
               T=float
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(30): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(119): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
           with
           [
               _Ty2=double
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(30): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(119): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
           with
           [
               _Ty1=double
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(45): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(134): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
           with
           [
               _Ty2=double
           ]
-c:\users\мсай\source\repos\graphs\graphs\graph.h(45): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(134): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
           with
           [
               _Ty1=double
           ]
-c:\users\мсай\source\repos\graphs\graphs\source.cpp(16): warning C4244: аргумент: преобразование "const double" в "unsigned int", возможна потеря данных
-c:\users\мсай\source\repos\graphs\graphs\source.cpp(90): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\graph.h(147): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(147): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(202): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\graph.h(211): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\graph.h(235): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\plot.h(5): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\plot.h(17): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\plot.h(17): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(101): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(161): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
           with
           [
               T=float
           ]
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(161): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(176): warning C4244: аргумент: преобразование "const T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(176): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\мсай\source\repos\graphs\graphs\source.cpp(354): warning C4244: аргумент: преобразование "const double" в "unsigned int", возможна потеря данных
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(67): warning C4661: void Graph<int>::precalcPoints(int): отсутствует подходящее определение для запроса на явное создание экземпляра шаблона
+  c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(60): note:  см. объявление "Graph<int>::precalcPoints"
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(458): warning C4018: <: несоответствие типов со знаком и без знака
+  c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(549): note: выполняется компиляция ссылки на экземпляр шаблон функции "int isStronglyConnected<double>(Graph<double> &)"
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(459): warning C4244: аргумент: преобразование "T" в "int", возможна потеря данных
+          with
+          [
+              T=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(72): warning C4244: аргумент: преобразование "_Ty2" в "float", возможна потеря данных
+          with
+          [
+              _Ty2=double
+          ]
+  c:\users\мсай\source\repos\graphs\graphs\graph.h(111): note: выполняется компиляция ссылки на экземпляр шаблон функции "void draw_text<int>(std::pair<double,double>,T,bool,sf::RenderWindow &)"
+          with
+          [
+              T=int
+          ]
+c:\users\мсай\source\repos\graphs\graphs\graph.h(72): warning C4244: аргумент: преобразование "_Ty1" в "float", возможна потеря данных
+          with
+          [
+              _Ty1=double
+          ]
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(70): warning C4661: void Graph<int>::precalcPoints(int): отсутствует подходящее определение для запроса на явное создание экземпляра шаблона
+  c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(60): note:  см. объявление "Graph<int>::precalcPoints"
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(88): warning C4018: <: несоответствие типов со знаком и без знака
+  c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(464): note: выполняется компиляция ссылки на экземпляр шаблон функции "void dfs<double>(Graph<double> &,int,std::vector<int,std::allocator<_Ty>> &,std::vector<_Ty,std::allocator<_Ty>> &)"
+          with
+          [
+              _Ty=int
+          ]
+  c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(549): note: выполняется компиляция ссылки на экземпляр шаблон функции "int isStronglyConnected<double>(Graph<double> &)"
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(101): warning C4018: <: несоответствие типов со знаком и без знака
+  c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(468): note: выполняется компиляция ссылки на экземпляр шаблон функции "void dfs2<double>(Graph<double> &,int,std::vector<int,std::allocator<_Ty>> &)"
+          with
+          [
+              _Ty=int
+          ]
+c:\users\мсай\source\repos\graphs\graphs\points_on_edges.h(511): warning C4715: nthprime: значение возвращается не при всех путях выполнения
   graphs.vcxproj -> C:\Users\МСАЙ\source\repos\graphs\Debug\graphs.exe
