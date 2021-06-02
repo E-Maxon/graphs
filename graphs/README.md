@@ -1,6 +1,6 @@
 # graphs
 
-exe-файл в папке graphs/Debug
+exe-файл в папке Debug
 
 Чтобы запустить программу, нужно скачать всю папку graphs/Debug и запустить файл graphs.exe
 
