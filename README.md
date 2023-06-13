@@ -1,21 +1,5 @@
 # graphs
 
-exe-файл в папке graphs/Debug
-
-Код программы в папке graphs/graphs
-
-Чтобы запустить программу, нужно скачать всю папку graphs/Debug и запустить файл graphs.exe
-
-Далее откроется программа. Можно вводить граф как графическим путем: при клике ЛКМ появляется новая вершина, кликами можно соединить 2 вершины ребром и затем, после ввода квадрата веса ребра, нажать Enter. Также можно двигать вершины. Либо можно задавать текстовым путем в формате: v u w через строку, где v, u -- вершины, w -- вес ребра(v->u) между этими вершинами. 
-
-При нажатии на кнопку "GO!" начинается симуляция движения точек. Если нажать на кнопку "Pause", симуляция остановится. Если нажать еще раз, снова возобновиться. Чтобы вернуться во ввод, нажать "Stop".
-
-Чтобы посмотреть график -- нажать "View plot". Чтобы выйти из просмотра графика -- нажать Esc.
-
-Esc в остальных режимах - выход из программы
-
-_____________________________________________________________________________________
-
 Consider a metric graph. At the initial moment of time, points appear from the source s along all edges incident to s and move at unit speed. When k points, where k can take values from 1 to the degree of vertex v, are at the vertex of the graph, v new points appear, going along all edges incident to vertex v. Let N (T) be the number of points that move along the chart at time T. The functionality of the program allows you to enter a small graph and see the plot of the number of points versus time.
 
 The code of the program lies in "./graphs/graphs path". You have to download the "graphs" folder and launch "./graphs/Debug/graphs.exe" file to run the program.
